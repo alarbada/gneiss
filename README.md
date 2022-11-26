@@ -20,27 +20,13 @@ gneiss will attempt to produce functions that write html components either in pu
 
 Not even in alpha. The purpose of 
 
-MVP:
+TODO:
 
-- [ ] Define component
-- [ ] Instantiate component
-- [ ] Both compile and interpret component
-
-Optional:
-
-- [ ] Instantiate component
+- [ ] instantiate multiple components
 - [ ] component properties
 - [ ] component slots
-- [ ] x-if, x-else-if, x-else
-- [ ] x-for
-- [ ] type checking for given struct
+- [ ] write external data into templates
+- [ ] if, else if, else branches
+- [ ] for
 - [ ] variables
-- [ ] global variables
-- [ ] html file embedding
-- [ ] x-comment, para comentar
-
-
-- x-range (syntactic sugar for x-for)
-- css handling with scoping resolved
-- modules? or import / export syntax
-    - maybe play with go package system a bit
+- [ ] calling external functions (from other code)
