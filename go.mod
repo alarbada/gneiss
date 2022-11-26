@@ -1,4 +1,4 @@
-module gneiss
+module github.com/not-rusty/gneiss
 
 go 1.19
 

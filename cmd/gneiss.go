@@ -3,7 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"gneiss"
+
+	"github.com/not-rusty/gneiss"
 )
 
 var (

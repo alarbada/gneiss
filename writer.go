@@ -84,7 +84,6 @@ import "io"
             }
         }
 
-
         return sb.String(), nil
     default:
         return "", fmt.Errorf("invalid node %v, expected fileNode", n)

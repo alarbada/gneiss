@@ -28,3 +28,19 @@ func Execute(filename string, devMode bool) (string, error) {
     writer := writer{devMode, ast}
     return writer.Write()
 }
+
+func lexAndParse(contents string) (node, error) {
+    l := lexer{
+    	tokens:   []token{},
+    	contents: contents,
+    	pos:      0,
+    }
+    l.lex()
+
+    p := parser{
+    	tokens: l.tokens,
+    	pos:    0,
+    }
+
+    return p.parse()
+}
