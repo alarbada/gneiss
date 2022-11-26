@@ -51,48 +51,26 @@ import "io"
     }
 }
 
-func (x *writer) WriteTmplFile() (string, error) {
-    var sb strings.Builder
+func (x *writer) WriteTmplFile() string {
+    return `
+package main
 
-    switch n := x.ast.(type) {
-    case fileNode:
-        sb.WriteString(`package main
+import (
+    "io"
+    "github.com/not-rusty/gneiss"
+) 
 
-import "io"
+func Main(w io.Writer) {
+    i := gneiss.NewInterpreter("./examples/template.html")
+    i.Exec(w)
+}
 
-`)
-
-        for _, child := range n.children {
-            switch c := child.(type) {
-            case componentNode:
-                sb.WriteString(`func Main(w io.Writer) {`)
-                for _, child := range c.children {
-                    switch c := child.(type) {
-                    case textNode:
-                        sb.WriteString("\nw.Write([]byte(`\n")
-                        sb.WriteString(c.contents)
-                        sb.WriteString("`))\n")
-                    default:
-                        return "", fmt.Errorf("invalid node %#v", c)
-                    }
-                }
-                sb.WriteString(`}`)
-            case textNode:
-                sb.WriteString(c.contents)
-            default:
-                return "", fmt.Errorf("invalid node %#v", c)
-            }
-        }
-
-        return sb.String(), nil
-    default:
-        return "", fmt.Errorf("invalid node %v, expected fileNode", n)
-    }
+`
 }
 
 func (x *writer) Write() (string, error) {
     if x.devMode {
-        return x.WriteTmplFile()
+        return x.WriteTmplFile(), nil
     } else {
         return x.WriteGoFile()
     }

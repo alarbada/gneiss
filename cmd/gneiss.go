@@ -15,8 +15,6 @@ var (
 func main() {
     flag.Parse()
 
-    fmt.Println(*fileF, *devModeF)
-
     s, err := gneiss.Execute(*fileF, *devModeF)
     if err != nil { panic(err) }
 

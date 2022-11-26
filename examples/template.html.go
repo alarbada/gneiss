@@ -1,12 +1,12 @@
 package main
 
-import (
-	"io"
+import "io"
 
-	"github.com/not-rusty/gneiss"
-)
-
-func Main(w io.Writer) error {
-    i := gneiss.NewInterpreter("./examples/template.html")
-    return i.Exec(w)
+func Main(w io.Writer) {
+w.Write([]byte(`
+    <div>I'm the first app! omg</div>
+    <div>I'm the first app! omg</div>
+    <div>I'm the first app! omg</div>
+    <div>I'm the first app! omg</div>
+`))
 }

@@ -1,6 +1,7 @@
 package gneiss
 
 import (
+	"fmt"
 	"io"
 	"os"
 )
@@ -38,9 +39,15 @@ func writeNode(n node, w io.Writer) error {
     return nil
 }
 
-func (x *Interpreter) Exec(w io.Writer) error {
+func (x *Interpreter) Exec(w io.Writer) {
     node, err := lexAndParse(x.filecontents)
-    if err != nil { return err }
+    if err != nil {
+        fmt.Println("interpreting error: ", err)
+        return
+    }
 
-    return writeNode(node, w)
+    err = writeNode(node, w)
+    if err != nil {
+        fmt.Println("interpreting error: ", err)
+    }
 }
