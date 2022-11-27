@@ -1,0 +1,12 @@
+<g-component name="basic_interpreted">
+    <div>
+        <h1>Test test</h1>
+        <p>test test </p>
+    </div>
+</g-component>
+<g-component name="basic_compiled">
+    <div>
+        <h1>Test test</h1>
+        <p>test test </p>
+    </div>
+</g-component>

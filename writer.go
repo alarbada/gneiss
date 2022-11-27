@@ -2,6 +2,8 @@ package gneiss
 
 import (
 	"fmt"
+	"io"
+	"os"
 	"strings"
 )
 
@@ -68,10 +70,72 @@ func Main(w io.Writer) {
 `
 }
 
-func (x *writer) Write() (string, error) {
+func (x *writer) Write(filename string) error {
     if x.devMode {
-        return x.WriteTmplFile(), nil
+        f := x.WriteTmplFile()
+
+        file, err := os.Create(filename)
+        if err != nil { return err }
+        defer file.Close()
+
+        _, err = file.WriteString(f)
+        return err
     } else {
-        return x.WriteGoFile()
+        f, err := x.WriteGoFile()
+        if err != nil { return err }
+
+        file, err := os.Create(filename)
+        if err != nil { return err }
+        defer file.Close()
+
+        _, err = file.WriteString(f)
+        return err
+    }
+}
+
+
+type Interpreter struct {
+    filecontents string
+}
+
+func NewInterpreter(filename string) Interpreter {
+    bs, err := os.ReadFile(filename)
+    if err != nil { panic(err) }
+
+    return Interpreter{
+    	filecontents: string(bs),
+    }
+}
+
+func writeNode(n node, w io.Writer) error {
+    switch n := n.(type) {
+    case fileNode:
+        for _, child := range n.children {
+            err := writeNode(child, w)
+            if err != nil { return err }
+        }
+    case componentNode:
+        for _, child := range n.children {
+            err := writeNode(child, w)
+            if err != nil { return err }
+        }
+    case textNode:
+        _, err := w.Write([]byte(n.contents))
+        if err != nil { return err }
+    }
+
+    return nil
+}
+
+func (x *Interpreter) Exec(w io.Writer) {
+    node, err := lexAndParse(x.filecontents)
+    if err != nil {
+        fmt.Println("interpreting error: ", err)
+        return
+    }
+
+    err = writeNode(node, w)
+    if err != nil {
+        fmt.Println("interpreting error: ", err)
     }
 }
