@@ -18,15 +18,15 @@ gneiss will attempt to produce functions that write html components either in pu
 
 ## Dev status
 
-Not even in alpha. The purpose of 
+Not even in alpha. This is barely a proof of concept, updates upcoming...
 
-TODO:
+On the TODO list:
 
 - [ ] instantiate multiple components
 - [ ] component properties
 - [ ] component slots
 - [ ] write external data into templates
-- [ ] if, else if, else branches
-- [ ] for
+- [ ] if, else if, else statements
+- [ ] for statements
 - [ ] variables
-- [ ] calling external functions (from other code)
+- [ ] calling external functions (from other templates // go code)
